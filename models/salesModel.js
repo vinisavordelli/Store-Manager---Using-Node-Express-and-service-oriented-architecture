@@ -20,13 +20,12 @@ const getAll = async () => {
   const serialized = sales.map((sale) => serialize(sale));
   return serialized;
 };
-
 const findById = async (id) => {
   const QUERY = `
   SELECT s.date, sp.product_id, sp.quantity
   FROM StoreManager.sales_products AS sp
   INNER JOIN StoreManager.sales AS s
-  ON sp.sale_id = S.id
+  ON sp.sale_id = s.id
   WHERE sp.sale_id = ?
   ORDER BY sp.sale_id ASC;
   `;

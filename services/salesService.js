@@ -14,7 +14,7 @@ const findById = async (id) => {
       error:
       { 
         code: 'Not Found',
-        message: 'Sorry, sale Not Found',
+        message: 'Sale not found',
       } };
   }
 
