@@ -8,7 +8,7 @@ const serialize = (saleData) => ({
 });
 
 const getAll = async () => {
-  const query = 'SELECT * FROM sales_products';
+  const query = 'SELECT * FROM sales_products ORDER BY sale_id ASC, product_id ASC;';
   const [sales] = await connection.execute(query);
 
   return sales.map(serialize);
