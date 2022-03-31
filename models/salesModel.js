@@ -20,6 +20,9 @@ const getAll = async () => {
   const serialized = sales.map((sale) => serialize(sale));
   return serialized;
 };
+
+// Banco de dados não estava conseguindo acessar a coluna nos testes, nato ajudou com isso, mas causas são ainda desconhecidas.
+
 const findById = async (id) => {
   const QUERY = `
   SELECT s.date, sp.product_id, sp.quantity
