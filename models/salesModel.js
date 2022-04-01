@@ -7,6 +7,8 @@ const serialize = (saleData) => ({
   quantity: saleData.quantity,
 });
 
+// Banco de dados não estava conseguindo acessar a coluna nos testes, nato ajudou com isso, mas causas são ainda desconhecidas.
+
 const getAll = async () => {
   const QUERY = `
   SELECT sp.sale_id, s.date, sp.product_id, sp.quantity
@@ -21,7 +23,27 @@ const getAll = async () => {
   return serialized;
 };
 
-// Banco de dados não estava conseguindo acessar a coluna nos testes, nato ajudou com isso, mas causas são ainda desconhecidas.
+const createSale = async (saleData) => {
+  const SALE_QUERY = `
+  INSERT INTO StoreManager.sales (date)
+  VALUES (current_timestamp());
+  `;
+
+  const [{ insertID }] = await connection.execute(SALE_QUERY);
+
+  const PRODUCTS_QUERY = `
+  INSERT INTO StoreManager.sales_products (sale_id, product_id, quantity)
+  VALUES (?, ?, ?);
+`;
+
+  await Promise.all(saleData.map((productID, quantity) => 
+  connection.execute(PRODUCTS_QUERY, [insertID, productID, quantity])));
+
+  return {
+    id: insertID,
+    itemsSold: saleData,
+  };
+};
 
 const findById = async (id) => {
   const QUERY = `
@@ -46,4 +68,5 @@ const findById = async (id) => {
 module.exports = {
   getAll,
   findById,
+  createSale,
 };
