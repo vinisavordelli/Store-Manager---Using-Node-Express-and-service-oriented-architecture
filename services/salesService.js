@@ -21,7 +21,14 @@ const findById = async (id) => {
   return product;
 };
 
+const createSale = async (saleData) => {
+  const sale = await salesModel.createSale(saleData);
+  // Não é necessário tratar o erro aqui será feito na validação
+  return sale;
+};
+
 module.exports = {
   getAll,
   findById,
+  createSale,
 };
