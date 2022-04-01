@@ -26,21 +26,22 @@ const getAll = async () => {
 const createSale = async (saleData) => {
   const SALE_QUERY = `
   INSERT INTO StoreManager.sales (date)
-  VALUES (current_timestamp());
+  VALUES (CURRENT_TIMESTAMP());
   `;
 
-  const [{ insertID }] = await connection.execute(SALE_QUERY);
+  const [sale] = await connection.execute(SALE_QUERY);
 
   const PRODUCTS_QUERY = `
   INSERT INTO StoreManager.sales_products (sale_id, product_id, quantity)
   VALUES (?, ?, ?);
 `;
 
-  await Promise.all(saleData.map((productID, quantity) => 
-  connection.execute(PRODUCTS_QUERY, [insertID, productID, quantity])));
+  saleData.forEach(async ({ productId, quantity }) => {
+  await connection.execute(PRODUCTS_QUERY, [sale.insertId, productId, quantity]);
+});
 
   return {
-    id: insertID,
+    id: sale.insertId,
     itemsSold: saleData,
   };
 };
