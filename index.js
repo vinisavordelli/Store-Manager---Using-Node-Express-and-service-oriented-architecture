@@ -1,3 +1,5 @@
+// Um grande agradecimento ao Nato e aos demais monitores que me ensinaram a debugar com qualidade, sem isso o projeto não sairia do lugar.
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const productsRouter = require('./routes/productsRouter');

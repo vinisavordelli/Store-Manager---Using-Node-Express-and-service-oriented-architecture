@@ -1,4 +1,5 @@
 const salesModel = require('../models/salesModel');
+const productsModel = require('../models/productsModel');
 
 const getAll = async () => {
   const sales = await salesModel.getAll();
@@ -27,8 +28,26 @@ const createSale = async (saleData) => {
   return sale;
 };
 
+const updateSale = async (id, saleData) => {
+  const filteredSale = await salesModel.findById(id);
+  const saleProducts = await productsModel.findById(saleData[0].productId);
+
+  if (!filteredSale) {
+    return { error: { code: 'Not Found', message: 'Sale not found' } };
+  }
+
+  if (!saleProducts) {
+    return { error: { code: 'Not Found', message: 'Product not found' } };
+  }
+
+  const sale = await salesModel.updateSale(id, saleData);
+
+  return sale;
+};
+
 module.exports = {
   getAll,
   findById,
   createSale,
+  updateSale,
 };

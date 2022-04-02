@@ -66,8 +66,23 @@ const findById = async (id) => {
   return serialized;
 };
 
+const updateSale = async (id, saleData) => {
+  const [{ productId, quantity }] = saleData;
+
+  const QUERY = `
+  UPDATE StoreManager.sales_products SET quantity = ? WHERE sale_id = ? AND product_id = ?;
+  `;
+
+  await connection.execute(QUERY, [quantity, id, productId]);
+  return {
+    saleId: id,
+    itemUpdated: saleData,
+  };
+};
+
 module.exports = {
   getAll,
   findById,
   createSale,
+  updateSale,
 };
