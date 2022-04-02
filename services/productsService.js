@@ -45,10 +45,9 @@ const removeProduct = async (id) => {
   if (!product) {
     return { error: { code: 'Not Found', message: 'Product not found' } };
   }
-  if (product) {
-    const result = productsModel.removeProduct(id);
-    return result;
-  }
+  const result = productsModel.removeProduct(id);
+
+  return result;
 };
 
 module.exports = {
