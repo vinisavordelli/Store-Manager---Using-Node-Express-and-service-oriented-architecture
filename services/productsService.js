@@ -29,14 +29,14 @@ const createProduct = async (name, quantity) => {
 };
 
 const updateProduct = async (name, quantity, id) => {
-  const filteredProduct = await productsModel.findById(id);
+  const product = await productsModel.findById(id);
 
-  if (!filteredProduct) {
-    return { error: { code: 'notFound', message: 'Product not found' } };
+  if (!product) {
+    return { error: { code: 'Not Found', message: 'Product not found' } };
   }
-  const product = await productsModel.updateProduct(name, quantity, id);
+  const result = await productsModel.updateProduct(name, quantity, id);
 
-  return product;
+  return result;
 };
 
 const removeProduct = async (id) => {
