@@ -27,7 +27,7 @@ const createSale = async (req, res) => {
 const updateSale = async (req, res, next) => {
   const { id } = req.params;
 
-  const updatedSale = await salesService.updateSale(+id, req.body);
+  const updatedSale = await salesService.updateSale(id, req.body);
 
   if (updatedSale.error) {
     return next(updatedSale.error);
