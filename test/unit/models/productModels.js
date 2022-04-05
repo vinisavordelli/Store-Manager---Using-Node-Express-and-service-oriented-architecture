@@ -4,7 +4,7 @@ const { expect } = require('chai');
 const connection = require('../../../models/connection');
 const productsModel = require('../../../models/productsModel');
 
-const { mockedAllProducts } = require('../mocks/productsMocks')
+const { mockedAllProducts, mockedProduct } = require('../mocks/productsMocks')
 
 describe('Tests the product Model', () => {
 
@@ -26,4 +26,24 @@ describe('Tests the product Model', () => {
 
   });
 
+  describe('Tests the product findByID', () => {
+
+    describe('when passing an existing id', () => {
+
+      beforeEach(async () => {
+        sinon.stub(connection, 'execute').resolves([mockedProduct]);
+      });
+
+      afterEach(async () => {
+        connection.execute.restore();
+      });
+
+      it('it should return the proper product', async () => {
+        const response = await productsModel.findById(2);
+
+        expect(response).to.deep.equal(mockedProduct[0])
+      })
+    })
+    
+  });
 });
